@@ -1,459 +1,3 @@
-// import 'package:flutter/material.dart';
-
-// import 'package:intl/intl.dart';
-// import 'package:technical_task/main.dart';
-// import 'package:technical_task/page3.dart';
-
-// class Page2 extends StatefulWidget {
-//   @override
-//   _Page2State createState() => _Page2State();
-// }
-
-// class _Page2State extends State<Page2> {
-//   DateTime selectedDate = DateTime.now();
-
-//   List<DateTime> generateDates() {
-//     List<DateTime> dates = [];
-//     for (int i = -7; i <= 7; i++) {
-//       dates.add(selectedDate.add(Duration(days: i)));
-//     }
-//     return dates;
-//   }
-
-//   String _convertToBangla(String number) {
-//     const englishToBangla = {
-//       '0': '০',
-//       '1': '১',
-//       '2': '২',
-//       '3': '৩',
-//       '4': '৪',
-//       '5': '৫',
-//       '6': '৬',
-//       '7': '৭',
-//       '8': '৮',
-//       '9': '৯',
-//     };
-
-//     String banglaNumber = '';
-//     for (int i = 0; i < number.length; i++) {
-//       banglaNumber += englishToBangla[number[i]] ?? number[i];
-//     }
-//     return banglaNumber;
-//   }
-
-//   String _getBanglaDayName(DateTime date) {
-//     final banglaWeekdays = [
-//       'রবি',
-//       'সোম',
-//       'মঙ্গল',
-//       'বুধ',
-//       'বৃহঃ',
-//       'শুক্র',
-//       'শনি'
-//     ];
-//     return banglaWeekdays[date.weekday % 7];
-//   }
-
-//   String _getBanglaDate(DateTime date) {
-//     return '${_convertToBangla(date.day.toString())}';
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     List<DateTime> dates = generateDates();
-
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('সময়রেখা', style: TextStyle(color: Colors.black)),
-//         backgroundColor: Colors.white,
-//         centerTitle: true,
-//         leading: IconButton(
-//           icon: Icon(Icons.menu, color: Colors.black),
-//           onPressed: () {},
-//         ),
-//         actions: [
-//           IconButton(
-//             icon: Icon(Icons.notifications, color: Colors.black),
-//             onPressed: () {},
-//           ),
-//         ],
-//         iconTheme: IconThemeData(color: Colors.black),
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           children: [
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: [
-//                 Text(
-//                   'আজ, ${DateFormat.yMMMMd('bn_BD').format(selectedDate)}',
-//                   style: TextStyle(fontSize: 18, color: Colors.black),
-//                 ),
-//                 ElevatedButton(
-//                   onPressed: () {
-//                     Navigator.push(
-//                       context,
-//                       MaterialPageRoute(builder: (context) => NewPostPage()),
-//                     );
-//                   },
-//                   child: Text('নতুন যোগ করুন'),
-//                   style: ElevatedButton.styleFrom(
-//                     primary: Colors.green,
-//                   ),
-//                 ),
-//               ],
-//             ),
-//             SizedBox(height: 20),
-//             Container(
-//               height: 70,
-//               child: ListView.builder(
-//                 scrollDirection: Axis.horizontal,
-//                 itemCount: dates.length,
-//                 itemBuilder: (context, index) {
-//                   DateTime date = dates[index];
-//                   bool isSelected = date.day == selectedDate.day &&
-//                       date.month == selectedDate.month &&
-//                       date.year == selectedDate.year;
-
-//                   return GestureDetector(
-//                     onTap: () {
-//                       setState(() {
-//                         selectedDate = date;
-//                       });
-//                     },
-//                     child: Container(
-//                       width: 50,
-//                       margin: EdgeInsets.symmetric(horizontal: 4.0),
-//                       decoration: BoxDecoration(
-//                         color: isSelected ? Colors.green : Colors.white,
-//                         borderRadius: BorderRadius.circular(8.0),
-//                         border: Border.all(
-//                             color: isSelected ? Colors.green : Colors.grey),
-//                       ),
-//                       child: Column(
-//                         mainAxisAlignment: MainAxisAlignment.center,
-//                         children: [
-//                           Text(
-//                             _getBanglaDayName(date),
-//                             style: TextStyle(
-//                               color: isSelected ? Colors.white : Colors.black,
-//                             ),
-//                           ),
-//                           Text(
-//                             _getBanglaDate(date),
-//                             style: TextStyle(
-//                               color: isSelected ? Colors.white : Colors.black,
-//                             ),
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                   );
-//                 },
-//               ),
-//             ),
-//             SizedBox(height: 35),
-//             Expanded(
-//               child: ListView(
-//                 children: [
-//                   Text('আজকের কার্যক্রম',
-//                       style: TextStyle(
-//                           color: const Color.fromARGB(255, 114, 107, 107),
-//                           fontSize: 18,
-//                           fontWeight: FontWeight.bold)),
-//                   Container(
-//                     padding:
-//                         EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-//                     child: Row(
-//                       mainAxisAlignment: MainAxisAlignment.start,
-//                       children: [
-//                         Column(
-//                           crossAxisAlignment: CrossAxisAlignment.start,
-//                           children: [
-//                             Text(
-//                               'সকাল',
-//                               style: TextStyle(
-//                                 fontSize: 16,
-//                                 color: Colors.black,
-//                                 fontWeight: FontWeight.bold,
-//                               ),
-//                             ),
-//                             Text(
-//                               '১১:০০ মি.',
-//                               style: TextStyle(
-//                                 fontSize: 16,
-//                                 color: Colors.black,
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                         SizedBox(width: 16),
-//                         Expanded(
-//                           child: Card(
-//                             color: Colors.green,
-//                             child: Padding(
-//                               padding: const EdgeInsets.all(8.0),
-//                               child: Column(
-//                                 crossAxisAlignment: CrossAxisAlignment.start,
-//                                 children: [
-//                                   Text(
-//                                     '১১:০০ মি.',
-//                                     style: TextStyle(
-//                                       fontSize: 16,
-//                                       color: Colors.white,
-//                                       fontWeight: FontWeight.bold,
-//                                     ),
-//                                   ),
-//                                   SizedBox(height: 4),
-//                                   Text(
-//                                     'সেখানে তোমার কিশোরী বধূটি মাটির প্রদীপ ধরী, তুলসীর মূলে প্রণাম যে আরকে হ্রদয় তোমারে স্মরি।',
-//                                     style: TextStyle(
-//                                       fontSize: 14,
-//                                       color: Colors.white,
-//                                     ),
-//                                   ),
-//                                   SizedBox(height: 8),
-//                                   Row(
-//                                     children: [
-//                                       Icon(Icons.location_on,
-//                                           color: Colors.white),
-//                                       SizedBox(width: 4),
-//                                       Text(
-//                                         'ঢাকা, বাংলাদেশ',
-//                                         style: TextStyle(color: Colors.white),
-//                                       ),
-//                                     ],
-//                                   ),
-//                                 ],
-//                               ),
-//                             ),
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                   Container(
-//                     padding:
-//                         EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-//                     child: Row(
-//                       mainAxisAlignment: MainAxisAlignment.start,
-//                       children: [
-//                         Column(
-//                           crossAxisAlignment: CrossAxisAlignment.start,
-//                           children: [
-//                             Text(
-//                               'দুপুর',
-//                               style: TextStyle(
-//                                 fontSize: 16,
-//                                 color: Colors.blue,
-//                                 fontWeight: FontWeight.bold,
-//                               ),
-//                             ),
-//                             Text(
-//                               '০২:০০ মি.',
-//                               style: TextStyle(
-//                                 fontSize: 16,
-//                                 color: Colors.blue,
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                         SizedBox(width: 16),
-//                         Expanded(
-//                           child: Card(
-//                             color: Colors.black,
-//                             child: Padding(
-//                               padding: const EdgeInsets.all(8.0),
-//                               child: Column(
-//                                 crossAxisAlignment: CrossAxisAlignment.start,
-//                                 children: [
-//                                   Text(
-//                                     '২:০০ মি.',
-//                                     style: TextStyle(
-//                                       fontSize: 16,
-//                                       color: Colors.white,
-//                                       fontWeight: FontWeight.bold,
-//                                     ),
-//                                   ),
-//                                   SizedBox(height: 4),
-//                                   Text(
-//                                     'তোমার গোকুল আজি থেকে নাই ভালোবাসা বলে কাবে, ভালোবেসে তাই বুকে বেঁধে লয় আদরিয়া যারে তারে।',
-//                                     style: TextStyle(
-//                                       fontSize: 14,
-//                                       color: Colors.white,
-//                                     ),
-//                                   ),
-//                                   SizedBox(height: 8),
-//                                   Row(
-//                                     children: [
-//                                       Icon(Icons.location_on,
-//                                           color: Colors.white),
-//                                       SizedBox(width: 4),
-//                                       Text(
-//                                         'চট্টগ্রাম, বাংলাদেশ',
-//                                         style: TextStyle(color: Colors.white),
-//                                       ),
-//                                     ],
-//                                   ),
-//                                 ],
-//                               ),
-//                             ),
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                   Container(
-//                     padding:
-//                         EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-//                     child: Row(
-//                       mainAxisAlignment: MainAxisAlignment.start,
-//                       children: [
-//                         Column(
-//                           crossAxisAlignment: CrossAxisAlignment.start,
-//                           children: [
-//                             Text(
-//                               'দুপুর',
-//                               style: TextStyle(
-//                                 fontSize: 16,
-//                                 color: Colors.black,
-//                                 fontWeight: FontWeight.bold,
-//                               ),
-//                             ),
-//                             Text(
-//                               '০২:০০ মি.',
-//                               style: TextStyle(
-//                                 fontSize: 16,
-//                                 color: Colors.black,
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                         SizedBox(width: 16),
-//                         Expanded(
-//                           child: Card(
-//                             color: Colors.green,
-//                             child: Padding(
-//                               padding: const EdgeInsets.all(8.0),
-//                               child: Column(
-//                                 crossAxisAlignment: CrossAxisAlignment.start,
-//                                 children: [
-//                                   Text(
-//                                     '২:০০ মি.',
-//                                     style: TextStyle(
-//                                       fontSize: 16,
-//                                       color: Colors.white,
-//                                       fontWeight: FontWeight.bold,
-//                                     ),
-//                                   ),
-//                                   SizedBox(height: 4),
-//                                   Text(
-//                                     'তোমার গোকুল আজি থেকে নাই ভালোবাসা বলে কাবে, ভালোবেসে তাই বুকে বেঁধে লয় আদরিয়া যারে তারে।',
-//                                     style: TextStyle(
-//                                       fontSize: 14,
-//                                       color: Colors.white,
-//                                     ),
-//                                   ),
-//                                   SizedBox(height: 8),
-//                                   Row(
-//                                     children: [
-//                                       Icon(Icons.location_on,
-//                                           color: Colors.white),
-//                                       SizedBox(width: 4),
-//                                       Text(
-//                                         'চট্টগ্রাম, বাংলাদেশ',
-//                                         style: TextStyle(color: Colors.white),
-//                                       ),
-//                                     ],
-//                                   ),
-//                                 ],
-//                               ),
-//                             ),
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//       bottomNavigationBar: BottomNavigationBar(
-//         items: [
-//           BottomNavigationBarItem(
-//             icon: IconButton(
-//               icon: Icon(
-//                 Icons.home_outlined,
-//                 color: Colors.black,
-//                 size: 38,
-//               ),
-//               onPressed: () {
-//                 Navigator.push(
-//                   context,
-//                   MaterialPageRoute(builder: (context) => HomePage()),
-//                 );
-//               },
-//             ),
-//             label: '',
-//           ),
-//           BottomNavigationBarItem(
-//             icon: IconButton(
-//               icon: Icon(Icons.calendar_today, color: Colors.black),
-//               onPressed: () {
-//                 // Navigate to Page2
-//                 Navigator.push(
-//                   context,
-//                   MaterialPageRoute(builder: (context) => Page2()),
-//                 );
-//               },
-//             ),
-//             label: '',
-//           ),
-//           BottomNavigationBarItem(
-//             icon: IconButton(
-//               icon: Icon(Icons.camera, color: Colors.green),
-//               onPressed: () {
-//                 // Handle camera icon press
-//                 setState(() {
-//                   // Your logic here
-//                 });
-//               },
-//             ),
-//             label: '',
-//           ),
-//           BottomNavigationBarItem(
-//             icon: IconButton(
-//               icon: Icon(Icons.list, color: Colors.black),
-//               onPressed: () {
-//                 // Handle list icon press
-//                 setState(() {
-//                   // Your logic here
-//                 });
-//               },
-//             ),
-//             label: '',
-//           ),
-//           BottomNavigationBarItem(
-//             icon: IconButton(
-//               icon: Icon(Icons.person, color: Colors.black),
-//               onPressed: () {
-//                 // Handle person icon press
-//                 setState(() {
-//                   // Your logic here
-//                 });
-//               },
-//             ),
-//             label: '',
-//           ),
-//         ],
-//         iconSize: 30,
-//       ),
-//     );
-//   }
-// }
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
@@ -631,7 +175,9 @@ class _Page2State extends State<Page2> {
                       width: 50,
                       margin: EdgeInsets.symmetric(horizontal: 4.0),
                       decoration: BoxDecoration(
-                        color: isSelected ? Colors.green : Colors.white,
+                        color: isSelected
+                            ? const Color.fromARGB(255, 50, 172, 54)
+                            : Colors.white,
                         borderRadius: BorderRadius.circular(8.0),
                         border: Border.all(
                             color: isSelected ? Colors.green : Colors.grey),
@@ -752,7 +298,7 @@ class _Page2State extends State<Page2> {
         items: [
           BottomNavigationBarItem(
             icon: Transform.translate(
-              offset: Offset(-13, 6), // Move the icon 10 pixels down
+              offset: Offset(-13, 6),
               child: IconButton(
                 icon: Icon(
                   Icons.home_outlined,
@@ -771,7 +317,7 @@ class _Page2State extends State<Page2> {
           ),
           BottomNavigationBarItem(
             icon: Transform.translate(
-              offset: Offset(-21, 0), // Move the icon 10 pixels down
+              offset: Offset(-21, 0),
               child: IconButton(
                 icon: Icon(Icons.calendar_today, color: Colors.black),
                 onPressed: () {
@@ -786,11 +332,11 @@ class _Page2State extends State<Page2> {
           ),
           BottomNavigationBarItem(
             icon: Transform.translate(
-              offset: Offset(-12, -40), // Adjust the offset value as needed
+              offset: Offset(-12, -40),
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.green,
+                  color: const Color.fromARGB(255, 17, 114, 20),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.2),
@@ -815,24 +361,14 @@ class _Page2State extends State<Page2> {
           BottomNavigationBarItem(
             icon: IconButton(
               icon: Icon(Icons.list, color: Colors.black),
-              onPressed: () {
-                // Handle list icon press
-                setState(() {
-                  // Your logic here
-                });
-              },
+              onPressed: () {},
             ),
             label: '',
           ),
           BottomNavigationBarItem(
             icon: IconButton(
               icon: Icon(Icons.person, color: Colors.black),
-              onPressed: () {
-                // Handle person icon press
-                setState(() {
-                  // Your logic here
-                });
-              },
+              onPressed: () {},
             ),
             label: '',
           ),

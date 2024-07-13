@@ -6,8 +6,7 @@ import 'package:technical_task/page2.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initializeDateFormatting(
-      'bn_BD', null); // Initialize the Bangla locale data
+  await initializeDateFormatting('bn_BD', null);
   runApp(MyApp());
 }
 
@@ -46,7 +45,7 @@ class _HomePageState extends State<HomePage> {
         percent = (passedMonths * 30 + passedDays) /
             ((remainingYears * 12 + remainingMonths + passedMonths) * 30 +
                 remainingDays +
-                passedDays); // Set the final percent value
+                passedDays);
       });
     });
   }
@@ -90,13 +89,21 @@ class _HomePageState extends State<HomePage> {
     return banglaNumber;
   }
 
-  final List<IconData> icons = [
-    Icons.account_box_outlined,
-    Icons.account_balance_outlined,
-    Icons.accessible_rounded,
-    Icons.apartment_rounded,
-    Icons.insert_drive_file_outlined,
-    Icons.settings_rounded,
+  // final List<IconData> icons = [
+  //   Icons.account_box_outlined,
+  //   Icons.account_balance_outlined,
+  //   Icons.accessible_rounded,
+  //   Icons.apartment_rounded,
+  //   Icons.insert_drive_file_outlined,
+  //   Icons.settings_rounded,
+  // ];
+  final List<String> images = [
+    'images/image1.jpg',
+    'images/image2.jpg',
+    'images/image3.jpg',
+    'images/image4.jpg',
+    'images/image5.jpg',
+    'images/image6.jpg',
   ];
 
   @override
@@ -106,19 +113,17 @@ class _HomePageState extends State<HomePage> {
         title: Row(
           children: [
             Container(
-              width: 30, // Set the width of the avatar
-              height: 30, // Set the height of the avatar
+              width: 30,
+              height: 30,
               decoration: BoxDecoration(
-                shape: BoxShape.rectangle, // Use rectangle shape
+                shape: BoxShape.rectangle,
                 image: DecorationImage(
-                  image: AssetImage(
-                      'images/demo.jpg'), // Replace with your avatar image URL
+                  image: AssetImage('images/demo.jpg'),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-            SizedBox(
-                width: 10), // Adjust the space between the avatar and the text
+            SizedBox(width: 10),
             Text('Flutter Task', style: TextStyle(color: Colors.black)),
           ],
         ),
@@ -141,26 +146,53 @@ class _HomePageState extends State<HomePage> {
           children: [
             Card(
               shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.circular(15.0), // Adjust the radius as needed
+                borderRadius: BorderRadius.circular(15.0),
               ),
               child: Container(
-                height: 110, // Adjust the height as needed
+                height: 110,
                 child: Padding(
-                  padding: EdgeInsets.only(top: 20.0), // Add top padding
+                  padding: EdgeInsets.only(top: 20.0),
                   child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: AssetImage('images/profile.png'),
-                      backgroundColor: Colors.grey[200],
-                      radius: 40,
+                    leading: Transform.translate(
+                      offset: Offset(0, -10), // Adjust the offset as needed
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage('images/profile.png'),
+                        backgroundColor: Colors.grey[200],
+                        radius: 40,
+                      ),
                     ),
-                    title: Text('ফারহান তানভীর',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold)),
-                    subtitle: Text('সফটবিডি লিমিটেড\nঢাকা',
-                        style: TextStyle(color: Colors.black, fontSize: 14)),
+                    title: Text(
+                      'ফারহান তানভীর',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'সফটবিডি লিমিটেড',
+                          style: TextStyle(color: Colors.grey, fontSize: 13),
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.location_on,
+                              color: Colors.grey,
+                              size: 13,
+                            ),
+                            // SizedBox(width: 4),
+                            Text(
+                              'ঢাকা',
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 13),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -230,11 +262,11 @@ class _HomePageState extends State<HomePage> {
                         Text('বছর',
                             style:
                                 TextStyle(fontSize: 14, color: Colors.black)),
-                        SizedBox(width: 40), // Spacer between labels
+                        SizedBox(width: 40),
                         Text('মাস',
                             style:
                                 TextStyle(fontSize: 14, color: Colors.black)),
-                        SizedBox(width: 40), // Spacer between labels
+                        SizedBox(width: 40),
                         Text('দিন',
                             style:
                                 TextStyle(fontSize: 14, color: Colors.black)),
@@ -253,10 +285,22 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(icons[index],
-                            size: 50,
-                            color: const Color.fromARGB(255, 49, 165, 53)),
-                        Text('মেনু নং 0000${index + 1}'),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Color.fromARGB(255, 172, 185, 172),
+                                width: 2.0),
+                            borderRadius:
+                                BorderRadius.circular(8.0), // Green border
+                          ),
+                          child: Image.asset(
+                            images[index],
+                            height: 62,
+                            width: 62,
+                          ),
+                        ),
+                        Text(
+                            'মেনু নং\n০০০০${_convertToBangla((index + 1).toString())}'),
                       ],
                     ),
                   );
@@ -270,26 +314,21 @@ class _HomePageState extends State<HomePage> {
         items: [
           BottomNavigationBarItem(
             icon: Transform.translate(
-              offset: Offset(-13, 6), // Move the icon 10 pixels down
+              offset: Offset(-13, 6),
               child: IconButton(
                 icon: Icon(
                   Icons.home_outlined,
                   color: Colors.black,
                   size: 32,
                 ),
-                onPressed: () {
-                  // Handle home icon press
-                  setState(() {
-                    // Your logic here
-                  });
-                },
+                onPressed: () {},
               ),
             ),
             label: '',
           ),
           BottomNavigationBarItem(
             icon: Transform.translate(
-              offset: Offset(-21, 0), // Move the icon 10 pixels down
+              offset: Offset(-21, 0),
               child: IconButton(
                 icon: Icon(Icons.calendar_today, color: Colors.black),
                 onPressed: () {
@@ -304,17 +343,17 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Transform.translate(
-              offset: Offset(-12, -40), // Adjust the offset value as needed
+              offset: Offset(-12, -40),
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.green,
+                  color: const Color.fromARGB(255, 17, 114, 20),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.2),
                       spreadRadius: 2,
                       blurRadius: 5,
-                      offset: Offset(0, 3), // changes position of shadow
+                      offset: Offset(0, 3),
                     ),
                   ],
                 ),
@@ -333,29 +372,20 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: IconButton(
               icon: Icon(Icons.list, color: Colors.black),
-              onPressed: () {
-                // Handle list icon press
-                setState(() {
-                  // Your logic here
-                });
-              },
+              onPressed: () {},
             ),
             label: '',
           ),
           BottomNavigationBarItem(
             icon: IconButton(
               icon: Icon(Icons.person, color: Colors.black),
-              onPressed: () {
-                // Handle person icon press
-                setState(() {
-                  // Your logic here
-                });
-              },
+              onPressed: () {},
             ),
             label: '',
           ),
         ],
         //iconSize: 30,
+        //selectedItemColor: const Color.fromARGB(255, 7, 87, 9),
       ),
     );
   }
